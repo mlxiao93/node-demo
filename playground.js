@@ -4,18 +4,39 @@ function swap(arr, i, j) {
   arr[j] = tmp;
 }
 
-function selectionSort(arr) {
-  var len = arr.length;
-  var min;
-  for (var i = 0; i < len - 1; i++) {
-    min = i;
-    for (var j = i + 1; j < len; j++) {
-      if (arr[j] < arr[min]) min = j;
+function partion(arr, low, high) {
+  var left = low,
+      right = high,
+      midVal = arr[low];
+
+  while (true) {
+
+    while (true) {
+      if (left > high) break;
+      if (arr[left] > midVal) break;
+      left++;
     }
-    if (i !== min) {
-      swap(arr, i, min);
+    while (true) {
+      if (right < low) break;
+      if (arr[right] < midVal) break;
+      right--;
     }
+
+    if (left >= right) break;
+    swap(arr, left, right);
   }
+  left--;
+  swap(arr, low, left);
+  return left;
+}
+
+function quickSort(arr, low, high) {
+  if (low === undefined) low = 0;
+  if (high === undefined) high = arr.length - 1;
+  if (low >= high) return;
+  var mid = partion(arr, low, high);
+  quickSort(arr, low, mid - 1);
+  quickSort(arr, mid + 1, high);
   return arr;
 }
 
@@ -24,5 +45,5 @@ for (var i = 0; i <= 10; i++) {
   arr.push(Math.ceil(Math.random() * (30 - 10) + 10));
 }
 console.log(arr);
-selectionSort(arr);
+quickSort(arr);
 console.log(arr);
