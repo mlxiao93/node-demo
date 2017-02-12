@@ -1,4 +1,4 @@
-class Defferred {
+class Defer {
 
   resolveCallback = () => {};
   rejectCallback = () => {};
@@ -20,34 +20,34 @@ class Defferred {
 export default class Promise {
 
   static resolve = function(data) {
-    let defferred = new Defferred();
+    let defer = new Defer();
     setTimeout(() => {
-      defferred.resolve(data);
+      defer.resolve(data);
     })
-    return defferred;
+    return defer;
   }
 
   static reject = function(data) {
-    let defferred = new Defferred();
+    let defer = new Defer();
     setTimeout(() => {
-      defferred.reject(data);
+      defer.reject(data);
     })
-    return defferred;
+    return defer;
   }
 
-  defferred = new Defferred();
+  defer = new Defer();
 
   constructor(fn = () => {}) {
 
     setTimeout(() => {
       fn.call(null, data => {
-        this.defferred.resolve(data);
+        this.defer.resolve(data);
       }, data => {
-        this.defferred.reject(data);
+        this.defer.reject(data);
       });
     });
 
-    return this.defferred;
+    return this.defer;
   }
 
 }
