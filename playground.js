@@ -10,18 +10,16 @@ function partion(arr, low, high) {
       midVal = arr[low];
 
   while (true) {
-
     while (true) {
-      if (left > high) break;
+      if (left > right) break;
       if (arr[left] > midVal) break;
       left++;
     }
     while (true) {
-      if (right < low) break;
+      if (right < left) break;
       if (arr[right] < midVal) break;
       right--;
     }
-
     if (left >= right) break;
     swap(arr, left, right);
   }
