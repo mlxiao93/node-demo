@@ -4,17 +4,26 @@ function swap(arr, i, j) {
   arr[j] = tmp;
 }
 
-function shellSort(arr) {
+function maxHeapify(arr, top, last) {
+  if (top >= last) return;
+  var lchild = top * 2 + 1,
+      rchild = top * 2 + 2;
+  maxHeapify(arr, lchild, last);
+  maxHeapify(arr, rchild, last);
+
+  var max = top;
+  if (lchild <= last && arr[lchild] > arr[max]) max = lchild;
+  if (rchild <= last && arr[rchild] > arr[max]) max = rchild;
+  if (max !== top) swap(arr, max, top);
+}
+
+function heapSort(arr) {
   var len = arr.length;
-  var step = Math.floor(len / 3);
-  while(step > 0) {
-    for (var i = step; i < len; i++) {
-      for (var j = i; j >= step; j -= step) {
-        if (arr[j] < arr[j - step]) swap(arr, j, j - step);
-      }
-    }
-    step = Math.floor(step / 3);
+  for (var last = len - 1; last > 0; last--) {
+    maxHeapify(arr, 0, last);
+    swap(arr, 0, last);
   }
+  return arr;
 }
 
 var arr = [];
@@ -22,5 +31,5 @@ for (var i = 0; i <= 10; i++) {
   arr.push(Math.ceil(Math.random() * (30 - 10) + 10));
 }
 console.log(arr);
-shellSort(arr);
+heapSort(arr);
 console.log(arr);
