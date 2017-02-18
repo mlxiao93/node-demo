@@ -1,2 +1,1 @@
-import './sort'
 import './playground'
