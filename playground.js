@@ -1,6 +1,11 @@
-function sum(a, b) {
-  if (a === 0) return b;
-  return sum((a & b) << 1, a ^ b);
-}
+var hammingDistance = function(x, y) {
+  var z = x ^ y,
+      distance = 0;
+  while (z !== 0) {
+    if (z % 2) distance++;
+    z = Math.floor(z / 2);
+  }
+  return distance;
+};
 
-console.log(sum(3, 19));
+console.log(hammingDistance(1, 4));
